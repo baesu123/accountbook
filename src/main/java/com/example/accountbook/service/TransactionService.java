@@ -30,4 +30,14 @@ public class TransactionService {
         return transactionMapper.getTotalAmountByType("EXPENSE");
     }
 
+    public List<Transaction> getTransactions(int page, int size) {
+        int offset = (page - 1) * size;
+        return transactionMapper.findPaged(offset, size);
+    }
+
+    public int getTotalPages(int size) {
+        int totalCount = transactionMapper.countAll();
+        return (int) Math.ceil((double) totalCount / size);
+    }
+
 }

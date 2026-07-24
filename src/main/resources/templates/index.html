@@ -20,14 +20,16 @@
                 <input type="text" name="amount" th:value="${transaction?.amount}" class="form-control" placeholder="금액">
                 <div class="text-danger" th:if="${#fields.hasErrors('amount')}"  th:errors="*{amount}"></div>
             </div>
+
             <div class="col-md-2">
                 <select name="type" class="form-select">
                     <option value="EXPENSE">지출</option>
                     <option value="INCOME">수입</option>
                 </select>
             </div>
+
             <div class="col-md-3">
-                <input type="text" name="category" th:value="${transaction?.category}" class="form-control" placeholder="금액">
+                <input type="text" name="category" th:value="${transaction?.category}" class="form-control" placeholder="카테고리">
                 <div class="text-danger" th:if="${#fields.hasErrors('category')}"  th:errors="*{category}"></div>
 
             </div>
@@ -86,8 +88,23 @@
             </div>
         </div>
     </div>
-
-
 </table>
+<nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+            <a class="page-link" th:href="@{/(page=${currentPage - 1})}">이전</a>
+        </li>
+
+        <li class="page-item"
+            th:each="pageNum : ${#numbers.sequence(1, totalPages > 0 ? totalPages : 1) }"
+            th:classappend="${pageNum == currentPage} ? 'active'">
+            <a class="page-link" th:href="@{/(page=${pageNum})}" th:text="${pageNum}">1</a>
+        </li>
+
+        <li class="page-item" th:classappend="${currentPage == totalPages || totalPages == 0} ? 'disabled'">
+            <a class="page-link" th:href="@{/(page=${currentPage + 1})}">다음</a>
+        </li>
+    </ul>
+</nav>
 </body>
 </html>

@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,11 +17,17 @@ public class TransactionController {
 
     // 가계부 메인 페이지 (목록 조회) - form 객체 바인딩 transaction을 전달
     @GetMapping("/")
-    public String index(Model model, Transaction transaction) {
+    public String index(@RequestParam(defaultValue = "1")int page, Model model, Transaction transaction) {
+        int pageSize = 10;
 
-        model.addAttribute("transactions", transactionService.getAllTransactions());
+        model.addAttribute("transactions", transactionService.getTransactions(page, pageSize));
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", transactionService.getTotalPages(pageSize));
+
+        // 기존 합계 로직 유지
         model.addAttribute("totalIncome", transactionService.getTotalIncome());
         model.addAttribute("totalExpense", transactionService.getTotalExpense());
+
         return "index";
     }
 

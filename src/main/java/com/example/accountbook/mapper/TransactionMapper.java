@@ -2,10 +2,19 @@ package com.example.accountbook.mapper;
 
 import com.example.accountbook.model.Transaction;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 @Mapper
 public interface TransactionMapper {
+
+    // 파라미터로 시작 위치(offset)와 한 페이지당 개수(limit)를 전달
+    List<Transaction> findPaged(@Param("offset") int offset, @Param("limit") int limit);
+
+    // 전체 데이터 개수 조회 (페이지 번호 계산용)
+    int countAll();
+
     // 모든 내역 조회
     List<Transaction> findAll();
 
@@ -17,4 +26,7 @@ public interface TransactionMapper {
 
     // 총 합계 계산 (유형별)
     Long getTotalAmountByType(String type);
+
+
+
 }
