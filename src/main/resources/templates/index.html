@@ -27,7 +27,9 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <input type="text" name="category" class="form-control" placeholder="카테고리">
+                <input type="text" name="category" th:value="${transaction?.category}" class="form-control" placeholder="금액">
+                <div class="text-danger" th:if="${#fields.hasErrors('category')}"  th:errors="*{category}"></div>
+
             </div>
             <div class="col-md-2">
                 <button type="submit" class="btn btn-primary w-100">등록</button>
