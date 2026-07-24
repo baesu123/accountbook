@@ -12,7 +12,7 @@ spring:
 
   sql:
     init:
-      mode: always
+      mode: never
 
 mybatis:
   # XML 매퍼 파일의 위치 지정

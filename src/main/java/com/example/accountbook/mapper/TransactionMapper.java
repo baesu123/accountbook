@@ -11,4 +11,10 @@ public interface TransactionMapper {
 
     // 내역 저장 (transaction.id가 생성되어 저장)
     void save(Transaction transaction);
+
+    // 삭제 메서드 추가
+    void deleteById(Long id);
+
+    // 총 합계 계산 (유형별)
+    Long getTotalAmountByType(String type);
 }

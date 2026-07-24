@@ -13,4 +13,14 @@
         VALUES (#{title}, #{amount}, #{type}, #{category}, NOW())
     </insert>
 
+    <delete id="deleteById">
+        DELETE FROM transactions WHERE id = #{id}
+    </delete>
+
+    <select id="getTotalAmountByType" resultType="long">
+        SELECT COALESCE(SUM(amount), 0)
+        FROM transactions
+        WHERE type = #{type}
+    </select>
+
 </mapper>

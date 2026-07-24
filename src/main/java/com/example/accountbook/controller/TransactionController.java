@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -17,10 +18,12 @@ public class TransactionController {
     // 가계부 메인 페이지 (목록 조회)
     @GetMapping("/")
     public String index(Model model) {
-        //Mode 객체는 View에 데이터 전달을 위한 객체(request)
         model.addAttribute("transactions", transactionService.getAllTransactions());
+        model.addAttribute("totalIncome", transactionService.getTotalIncome());
+        model.addAttribute("totalExpense", transactionService.getTotalExpense());
         return "index";
     }
+
     // 내역 저장 처리
     @PostMapping("/add")
     public String addTransaction(Transaction transaction) {
@@ -28,5 +31,9 @@ public class TransactionController {
         return "redirect:/"; // 저장 후 메인 페이지로 리다이렉트
     }
 
-
+    @GetMapping("/delete/{id}")
+    public String deleteTransaction(@PathVariable Long id) {
+        transactionService.removeTransaction(id);
+        return "redirect:/";
+    }
 }

@@ -41,7 +41,9 @@
         <th>카테고리</th>
         <th>유형</th>
         <th>금액</th>
+        <th></th>
     </tr>
+
     </thead>
     <tbody>
     <tr th:each="item : ${transactions}">
@@ -54,8 +56,32 @@
                     </span>
         </td>
         <td th:text="${#numbers.formatInteger(item.amount, 0, 'COMMA')} + '원'">1,000원</td>
+        <td>
+            <a th:href="@{/delete/{id}(id=${item.id})}"
+               class="btn btn-sm btn-outline-secondary"
+               onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+        </td>
     </tr>
+
     </tbody>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5>총 수입: <span th:text="${#numbers.formatInteger(totalIncome, 0, 'COMMA')} + '원'">0원</span></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5>총 지출: <span th:text="${#numbers.formatInteger(totalExpense, 0, 'COMMA')} + '원'">0원</span></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </table>
 </body>
 </html>

@@ -19,4 +19,15 @@ public class TransactionService {
     public void addTransaction(Transaction transaction) {
         transactionMapper.save(transaction);
     }
+    public void removeTransaction(Long id){
+        transactionMapper.deleteById(id);
+    }
+    public Long getTotalIncome(){
+        return transactionMapper.getTotalAmountByType("INCOME");
+    }
+
+    public Long getTotalExpense(){
+        return transactionMapper.getTotalAmountByType("EXPENSE");
+    }
+
 }
