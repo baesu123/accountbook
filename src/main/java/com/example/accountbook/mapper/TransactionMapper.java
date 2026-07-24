@@ -9,6 +9,6 @@ public interface TransactionMapper {
     // 모든 내역 조회
     List<Transaction> findAll();
 
-    // 내역 저장
+    // 내역 저장 (transaction.id가 생성되어 저장)
     void save(Transaction transaction);
 }

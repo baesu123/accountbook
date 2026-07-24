@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.accountbook.mapper.TransactionMapper">
+
+    <select id="findAll" resultType="Transaction">
+        SELECT * FROM transactions ORDER BY reg_date DESC
+    </select>
+
+    <insert id="save" parameterType="Transaction" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO transactions (title, amount, type, category, reg_date)
+        VALUES (#{title}, #{amount}, #{type}, #{category}, NOW())
+    </insert>
+
+</mapper>
