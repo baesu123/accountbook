@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!--자바의 인터페이스와 연동-->
 <mapper namespace="com.example.accountbook.mapper.TransactionMapper">
 
     <select id="findAll" resultType="Transaction">
@@ -23,15 +23,36 @@
         WHERE type = #{type}
     </select>
 
-
     <select id="findPaged" resultType="Transaction">
         SELECT * FROM transactions
+        <where>
+            <if test="startDate != null and startDate != ''">
+                reg_date >= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND reg_date &lt;= CONCAT(#{endDate}, ' 23:59:59')
+            </if>
+            <if test="category != null and category != ''">
+                AND category LIKE CONCAT('%', #{category}, '%')
+            </if>
+        </where>
         ORDER BY reg_date DESC
-            LIMIT #{limit} OFFSET #{offset}
+        LIMIT #{limit} OFFSET #{offset}
     </select>
 
     <select id="countAll" resultType="int">
         SELECT COUNT(*) FROM transactions
+        <where>
+            <if test="startDate != null and startDate != ''">
+                reg_date >= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND reg_date &lt;= CONCAT(#{endDate}, ' 23:59:59')
+            </if>
+            <if test="category != null and category != ''">
+                AND category LIKE CONCAT('%', #{category}, '%')
+            </if>
+        </where>
     </select>
 
 </mapper>

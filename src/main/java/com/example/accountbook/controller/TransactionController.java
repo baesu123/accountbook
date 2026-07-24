@@ -17,14 +17,28 @@ public class TransactionController {
 
     // 가계부 메인 페이지 (목록 조회) - form 객체 바인딩 transaction을 전달
     @GetMapping("/")
-    public String index(@RequestParam(defaultValue = "1")int page, Model model, Transaction transaction) {
+    public String index(
+            @RequestParam(defaultValue = "1")int page,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) String category,
+            Model model, Transaction transaction) {
+
         int pageSize = 10;
 
-        model.addAttribute("transactions", transactionService.getTransactions(page, pageSize));
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", transactionService.getTotalPages(pageSize));
 
-        // 기존 합계 로직 유지
+        //검색 조건이 포함된 목록과 전체 개수조회
+        model.addAttribute("transactions", transactionService.getTransactions(page, pageSize,
+                startDate, endDate, category));
+        int totalPages = transactionService.getTotalPages(pageSize, startDate, endDate, category);
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("category", category);
+
+
         model.addAttribute("totalIncome", transactionService.getTotalIncome());
         model.addAttribute("totalExpense", transactionService.getTotalExpense());
 

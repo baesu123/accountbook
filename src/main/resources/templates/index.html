@@ -37,7 +37,24 @@
                 <button type="submit" class="btn btn-primary w-100">등록</button>
             </div>
         </form>
-
+        <div class="card bg-light mb-3">
+            <div class="card-body">
+                <form method="get" th:action="@{/}" class="row g-2">
+                    <div class="col-md-3">
+                        <input type="date" name="startDate" th:value="${startDate}" class="form-control">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="endDate" th:value="${endDate}" class="form-control">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="category" th:value="${category}" class="form-control" placeholder="카테고리 검색">
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-secondary w-100">검색</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
