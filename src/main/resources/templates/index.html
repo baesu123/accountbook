@@ -10,12 +10,15 @@
 
 <div class="card mb-4">
     <div class="card-body">
-        <form th:action="@{/add}" method="post" class="row g-3">
+        <form th:action="@{/add}" th:object="${transaction}" method="post" class="row g-3">
             <div class="col-md-3">
-                <input type="text" name="title" class="form-control" placeholder="내역(예: 점심식사)" required>
+                <input type="text" name="title" th:value="${transaction?.title}" class="form-control" placeholder="내역">
+                <div class="text-danger" th:if="${#fields.hasErrors('title')}"  th:errors="*{title}"></div>
             </div>
+
             <div class="col-md-2">
-                <input type="number" name="amount" class="form-control" placeholder="금액" required>
+                <input type="text" name="amount" th:value="${transaction?.amount}" class="form-control" placeholder="금액">
+                <div class="text-danger" th:if="${#fields.hasErrors('amount')}"  th:errors="*{amount}"></div>
             </div>
             <div class="col-md-2">
                 <select name="type" class="form-select">
@@ -30,6 +33,7 @@
                 <button type="submit" class="btn btn-primary w-100">등록</button>
             </div>
         </form>
+
     </div>
 </div>
 
